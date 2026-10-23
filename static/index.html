@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestor de Tarefas</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Gestor de Tarefas</h1>
+    <div id="user-area" class="hidden">
+      <span id="user-name"></span>
+      <button id="btn-logout" class="secondary">Sair</button>
+    </div>
+  </header>
+
+  <main>
+    <p id="message" class="message hidden" role="alert"></p>
+
+    <!-- Login -->
+    <section id="view-login" class="card hidden">
+      <h2>Entrar</h2>
+      <form id="form-login">
+        <label>E-mail <input type="email" name="email" required></label>
+        <label>Senha <input type="password" name="password" required></label>
+        <button type="submit">Entrar</button>
+      </form>
+      <p>Não tem conta? <a href="#" data-go="register">Cadastre-se</a></p>
+    </section>
+
+    <!-- Registro -->
+    <section id="view-register" class="card hidden">
+      <h2>Criar conta</h2>
+      <form id="form-register">
+        <label>Nome <input type="text" name="name" required></label>
+        <label>E-mail <input type="email" name="email" required></label>
+        <label>Senha (mín. 6 caracteres) <input type="password" name="password" minlength="6" required></label>
+        <button type="submit">Cadastrar</button>
+      </form>
+      <p>Já tem conta? <a href="#" data-go="login">Entrar</a></p>
+    </section>
+
+    <!-- Tarefas -->
+    <section id="view-tasks" class="hidden">
+      <div class="card">
+        <h2 id="form-title">Nova tarefa</h2>
+        <form id="form-task">
+          <input type="hidden" name="id">
+          <label>Título * <input type="text" name="title" maxlength="200" required></label>
+          <label>Descrição <textarea name="description" rows="3" maxlength="2000"></textarea></label>
+          <div class="actions">
+            <button type="submit" id="btn-save">Cadastrar</button>
+            <button type="button" id="btn-cancel" class="secondary hidden">Cancelar edição</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Minhas tarefas</h2>
+        <p id="empty" class="muted hidden">Nenhuma tarefa cadastrada.</p>
+        <ul id="task-list" class="task-list"></ul>
+      </div>
+    </section>
+
+    <!-- Detalhes -->
+    <section id="view-detail" class="card hidden">
+      <h2 id="detail-title"></h2>
+      <p class="muted">Criada em <span id="detail-date"></span></p>
+      <p id="detail-description" class="description"></p>
+      <div class="actions">
+        <button id="detail-back" class="secondary">Voltar</button>
+        <button id="detail-edit">Editar</button>
+        <button id="detail-delete" class="danger">Excluir</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

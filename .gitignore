@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Banco de dados local (criado automaticamente)
+*.db
+*.sqlite3
+
+# Variáveis de ambiente / segredos
+.env
+
+# Editor / SO
+.vscode/
+.idea/
+.DS_Store
