@@ -81,10 +81,8 @@ gestor-tarefas/
 │   ├── index.html    # Telas de login, registro, lista, formulário e detalhes
 │   ├── style.css
 │   └── app.js        # Comunicação com a API
-├── tests/
-│   └── test_app.py   # Testes funcionais
-└── docs/
-    └── JIRA.md       # Planejamento das Sprints no Jira
+└── tests/
+    └── test_app.py   # Testes funcionais
 ```
 
 ## API
@@ -105,7 +103,39 @@ Todas as rotas de tarefas exigem login (sessão). Corpo das requisições em JSO
 
 Tarefas de outro usuário retornam **404**, sem revelar que existem.
 
-## Gestão do projeto
+## Deploy
 
-O planejamento no Jira (board Kanban, duas Sprints de 6 horas) está descrito em
-[`docs/JIRA.md`](docs/JIRA.md).
+A aplicação está publicada no PythonAnywhere:
+**https://bortolotto.pythonanywhere.com**
+
+### Como foi feito o deploy (PythonAnywhere)
+
+1. Criar uma conta gratuita (*Beginner*) em https://www.pythonanywhere.com.
+2. Abrir um console **Bash** e executar:
+   ```bash
+   git clone https://github.com/<seu-usuario>/gestor-tarefas.git
+   cd gestor-tarefas
+   pip3.10 install --user -r requirements.txt
+   python3.10 -c "import secrets; print(secrets.token_hex(32))"   # gera a SECRET_KEY
+   ```
+3. Na aba **Web**: **Add a new web app** → **Manual configuration** → **Python 3.10**.
+4. Em **Code**, definir *Source code* e *Working directory* como `/home/<usuario>/gestor-tarefas`.
+5. Substituir o conteúdo do **WSGI configuration file** por:
+   ```python
+   import os
+   import sys
+
+   path = '/home/<usuario>/gestor-tarefas'
+   if path not in sys.path:
+       sys.path.insert(0, path)
+
+   os.environ['SECRET_KEY'] = '<chave-gerada-no-passo-2>'
+
+   from app import create_app
+   application = create_app()
+   ```
+6. Clicar em **Reload** e acessar `https://<usuario>.pythonanywhere.com`.
+
+Para atualizar após novos commits: `cd ~/gestor-tarefas && git pull` no console e **Reload** na aba Web.
+
+> A `SECRET_KEY` fica apenas no arquivo WSGI do servidor e não é versionada no repositório.
